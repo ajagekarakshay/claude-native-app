@@ -1,0 +1,45 @@
+In Rust, `with_context` and `expect` are both methods used for error handling, but they serve different purposes and have different behaviors:
+
+1. `with_context`:
+
+`with_context` is a method provided by the `anyhow` crate, not a standard Rust feature. It's used to add additional context to an error without changing its type. This method is typically used with the `Result` type.
+
+Key points:
+- It allows you to add more information to an error without unwrapping it.
+- It returns a new `Result` with the added context.
+- If the `Result` is `Ok`, it passes through unchanged.
+- It's useful for creating more informative error messages in a chain of operations.
+
+Example:
+```rust
+use anyhow::{Context, Result};
+
+fn read_config() -> Result<Config> {
+    std::fs::read_to_string("config.toml")
+        .with_context(|| "Failed to read config file")?
+        .parse()
+        .with_context(|| "Failed to parse config file")
+}
+```
+
+2. `expect`:
+
+`expect` is a method provided by Rust's standard library for both `Option` and `Result` types. It's used to unwrap a value, panicking with a custom message if the value is `None` or `Err`.
+
+Key points:
+- It unwraps the value if it's `Some` or `Ok`.
+- It panics with a custom error message if it's `None` or `Err`.
+- It's typically used when you're certain that a failure shouldn't occur, and if it does, it's a serious enough error to crash the program.
+
+Example:
+```rust
+let config = std::fs::read_to_string("config.toml")
+    .expect("Failed to read config file");
+```
+
+Main differences:
+- `with_context` adds context without unwrapping, while `expect` unwraps and potentially panics.
+- `with_context` is part of the `anyhow` crate, while `expect` is in the standard library.
+- `with_context` is used for more graceful error handling, while `expect` is used when you want to crash on unexpected errors.
+
+Would you like me to explain or elaborate on any part of this comparison?

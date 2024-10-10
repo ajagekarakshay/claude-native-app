@@ -1,25 +1,29 @@
 import "./App.css";
 import ChatBox from "./components/ChatBox";
 import { createSignal, createEffect, onCleanup } from "solid-js";
+import { streamFile } from "./utils";
+
 
 export default function App() {
   const [text, setText] = createSignal("some random markdown text");
 
   createEffect(() => {
-    console.log("Effect running"); // Add this line
-    const interval = setInterval(() => {
-      setText((prevText) => {
-        const newText = prevText + "\nrandom gibberish text \n ```python\nprint('Hello, world!')\n```";
-        console.log("New text:", newText); // Add this line
-        return newText;
-      });
-    }, 1000);
+    console.log("Effect running");
     
+    const streamContent = async () => {
+      for await (const chunk of streamFile("./data.txt")) {
+        setText((prevText) => prevText + chunk);
+        await new Promise(resolve => setTimeout(resolve, 100)); // Delay between chunks
+      }
+    };
+
+    streamContent();
+
     onCleanup(() => {
-      console.log("Cleaning up interval"); // Add this line
-      clearInterval(interval);
+      console.log("Cleaning up");
     });
   });
-  const props = { type: "sys", content: text };
+
+  const props = { type: "user", content: text };
   return <ChatBox {...props} />;
 }

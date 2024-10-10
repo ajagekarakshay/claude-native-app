@@ -14,7 +14,10 @@
   "dependencies": {
     "@tauri-apps/api": ">=2.0.0",
     "@tauri-apps/plugin-shell": ">=2.0.0",
+    "@types/highlight.js": "^10.1.0",
+    "highlight.js": "^11.10.0",
     "marked": "^14.1.2",
+    "marked-highlight": "^2.1.4",
     "solid-js": "^1.7.8"
   },
   "devDependencies": {
