@@ -9,7 +9,7 @@ export default function App() {
     console.log("Effect running"); // Add this line
     const interval = setInterval(() => {
       setText((prevText) => {
-        const newText = `${prevText}\nrandom gibberish text`;
+        const newText = prevText + "\nrandom gibberish text \n ```python\nprint('Hello, world!')\n```";
         console.log("New text:", newText); // Add this line
         return newText;
       });
@@ -20,6 +20,6 @@ export default function App() {
       clearInterval(interval);
     });
   });
-  const props = { type: "user", content: text };
+  const props = { type: "sys", content: text };
   return <ChatBox {...props} />;
 }
