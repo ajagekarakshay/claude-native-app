@@ -3,7 +3,7 @@ import 'flowbite';
 import ChatBox from './components/ChatBox';
 import { createSignal, createEffect, onCleanup } from 'solid-js';
 import { streamFile } from './utils';
-import InputBox from './components/Input';
+import InputBox from './components/InputBox';
 import Sidebar from './components/Sidebar';
 
 const settingsItem = {
@@ -46,16 +46,16 @@ export default function App() {
     const props = { type: 'user', content: text };
     //return <ChatBox {...props} />;
     return (
-        <div class="flex">
+        <div class="flex h-screen">
             <Sidebar settingsItem={settingsItem} scrollItems={scrollItems} />
-            <div class="p-4 sm:ml-64">
-                <h1 class="text-2xl font-bold mb-4">
-                    Welcome to the Dashboard
-                </h1>
-                <p>
-                    This is the main content area. The sidebar can be collapsed
-                    for a more compact view.
-                </p>
+            <div class="flex-1 relative">
+                {/* Main content area */}
+                <div class="p-4">{/* Add your main content here */}</div>
+
+                {/* InputBox fixed at the bottom center */}
+                <div class="absolute bottom-0 left-0 right-0 p-0 flex justify-center">
+                    <InputBox />
+                </div>
             </div>
         </div>
     );
