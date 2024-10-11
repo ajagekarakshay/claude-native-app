@@ -2,18 +2,21 @@ import { createSignal } from 'solid-js';
 import 'flowbite';
 
 function InputBox() {
+    const [model, setModel] = createSignal('claude-3-5-sonnet');
+
     return (
         <div class="w-3/5 mx-auto">
             <form>
                 <label for="chat" class="sr-only">
                     Your message
                 </label>
-                <div class="flex flex-col items-start px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-700">
+                {/* Updated background color to #424345 */}
+                <div class="flex flex-col items-start px-3 py-2 rounded-lg bg-[#424345]">
                     <div class="flex items-center w-full">
                         <input
                             id="chat"
                             type="text"
-                            class="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            class="block mx-4 p-2.5 w-full text-sm text-gray-200 bg-[#424345] rounded-lg border border-gray-600 focus:outline-none focus:ring-0 dark:placeholder-gray-400 dark:text-white"
                             placeholder="Reply to Claude..."
                         />
                         <button
@@ -33,20 +36,21 @@ function InputBox() {
                         </button>
                     </div>
                     {/* <!-- Dropdown Menu --> */}
-                    <div class="mt-2 w-full">
+                    <div class="mt-1 w-full">
                         <label for="options" class="sr-only">
                             Choose an option
                         </label>
                         <select
                             id="options"
-                            class="block w-48 p-2.5 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                            class="appearance-none bg-transparent text-white border-none focus:outline-none"
                         >
-                            <option value="" disabled selected>
-                                Select an option
+                            <option value="claude-3-5-sonnet" disabled selected>
+                                Claude 3.5 Sonnet
                             </option>
-                            <option value="option1">Option 1</option>
-                            <option value="option2">Option 2</option>
-                            <option value="option3">Option 3</option>
+                            <option value="claude-3-opus">Claude 3 Opus</option>
+                            <option value="claude-3-haiku">
+                                Claude 3 Haiku
+                            </option>
                         </select>
                     </div>
                 </div>
