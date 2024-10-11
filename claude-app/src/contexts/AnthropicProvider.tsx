@@ -1,4 +1,4 @@
-import { createSignal, createContext, ParentComponent } from "solid-js";
+import { createSignal, createContext, ParentComponent } from 'solid-js';
 
 export interface AnthropicContextType {
   sendMessage: (message: string) => Promise<void>;
@@ -14,24 +14,27 @@ const AnthropicProvider: ParentComponent = (props) => {
     setMessages([...messages(), message]);
 
     try {
-      const response = await fetch("https://api.anthropic.com/v1/messages/stream", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer YOUR_API_KEY`,
-        },
-        body: JSON.stringify({
-          prompt: message,
-          // Add other necessary parameters here
-        }),
-      });
+      const response = await fetch(
+        'https://api.anthropic.com/v1/messages/stream',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer YOUR_API_KEY`,
+          },
+          body: JSON.stringify({
+            prompt: message,
+            // Add other necessary parameters here
+          }),
+        }
+      );
 
       if (!response.body) {
-        throw new Error("No response body");
+        throw new Error('No response body');
       }
 
       const reader = response.body.getReader();
-      const decoder = new TextDecoder("utf-8");
+      const decoder = new TextDecoder('utf-8');
       let done = false;
 
       while (!done) {
@@ -41,7 +44,7 @@ const AnthropicProvider: ParentComponent = (props) => {
         setMessages((prev) => [...prev, chunkValue]);
       }
     } catch (error) {
-      console.error("Error streaming message:", error);
+      console.error('Error streaming message:', error);
     }
   };
 
@@ -58,11 +61,11 @@ const AnthropicProvider: ParentComponent = (props) => {
 };
 
 const useAnthropic = (): AnthropicContextType => {
-    const context = useContext(AnthropicContext);
-    if (!context) {
-      throw new Error("useAnthropic must be used within an AnthropicsProvider");
-    }
-    return context;
-  };
-  
+  const context = useContext(AnthropicContext);
+  if (!context) {
+    throw new Error('useAnthropic must be used within an AnthropicsProvider');
+  }
+  return context;
+};
+
 export default useAnthropic;
