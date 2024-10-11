@@ -20,12 +20,12 @@ const Sidebar = (props: SidebarProps) => {
 
     return (
         <aside
-            class={`fixed top-0 left-0 z-40 w-64 h-screen transition-transform ${
-                isCollapsed()
-                    ? '-translate-x-full sm:translate-x-0 sm:w-16'
-                    : ''
+            class={`fixed top-0 left-0 z-40 w-64 h-screen transition-all duration-300 ease-in-out ${
+                isCollapsed() ? 'w-16 sm:w-16' : 'w-64'
             }`}
             aria-label="Sidebar"
+            onMouseEnter={() => setIsCollapsed(false)}
+            onMouseLeave={() => setIsCollapsed(true)}
         >
             <div class="h-full flex flex-col overflow-hidden bg-gray-50 dark:bg-gray-800">
                 <button
